@@ -1,14 +1,13 @@
-<todo>
-<h1>{ opts.title }</h1>
-<ul>
-  <li each={ items }>{ title }</li>
-</ul>
+todo
+  h1 { opts.title }
 
-<script>
-  this.items = [
-    { title: "a" },
-    { title: "b" },
-    { title: "c" }
-  ];
-</script>
-</todo>
+  ul
+    li('each={items}') { num }
+
+  script(type='text/coffeescript').
+    @items = [
+      { num: 1 }
+      { num: 2 }
+      { num: 3 }
+      ]
+
