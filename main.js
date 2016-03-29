@@ -22,7 +22,7 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow({window: 800, height: 600});
 
     // カレントディレクトリにある index.html を表示する
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/app/index.html');
 
     // ウィンドウを閉じたらアプリも終了
     mainWindow.on('closed', function() {
