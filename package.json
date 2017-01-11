@@ -5,9 +5,12 @@
   "main": "main.js",
   "scripts": {
     "build": "gulp build",
+    "watch": "gulp watch",
     "clean": "gulp clean",
     "start": "electron .",
-    "test": "gulp test"
+    "serve": "gulp serve",
+    "package": "gulp package:darwin",
+    "test": ""
   },
   "keywords": [
     "riot.js",
@@ -27,6 +30,8 @@
     "babelify": "^7.3.0",
     "browserify": "^13.3.0",
     "del": "^2.2.2",
+    "electron-connect": "^0.6.1",
+    "electron-packager": "^8.5.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-riot": "^1.0.6",
