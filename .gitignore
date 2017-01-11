@@ -1,8 +1,10 @@
+npm-debug.log
 /GPATH
 /GRTAGS
 /GSYMS
 /GTAGS
 /tags
-/node_modules
-/app/*.js
-/release/*
+/node_modules/
+/dist/
+/temp/
+/release/
