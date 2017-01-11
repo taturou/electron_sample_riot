@@ -1,0 +1,19 @@
+import riot from 'riot';
+
+<hoge>
+  <h1>{ title }</h1>
+
+  <script>
+    let tag = this;
+    const title = 'Riot.js';
+
+    tag.title = `${title} Sample`;
+  </script>
+
+  <style type='scss'>
+    $color: blue;
+    h1 {
+      color: $color;
+    }
+  </style>
+</hoge>

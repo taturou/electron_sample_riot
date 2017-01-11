@@ -1,32 +1,42 @@
-'use strict';
+// electronモジュールを読み込み
+const electron = require('electron');
+const {
+  app
+} = electron;
+const {
+  BrowserWindow
+} = electron; //ウィンドウを表す[BrowserWindow]はelectronモジュールに含まれている
 
-// module for application
-var app = require('app');
+// 新しいウィンドウ(Webページ)を生成
+let win;
 
-// module for window
-var BrowserWindow = require('browser-window');
-
-// メインウィンドウはGCされないようにグローバル変数にする
-var mainWindow = null;
-
-// 全てのウィンドウが閉じたらアプリケーションを終了する
-app.on('window-all-closed', function() {
-    if (process.platform != 'darwin') {
-        app.quit();
-    }
+function createWindow() {
+  // BrowserWindowインスタンスを生成
+  win = new BrowserWindow({
+    width: 800,
+    height: 600
+  });
+  // index.htmlを表示
+  win.loadURL(`file://${__dirname}/app/index.html`);
+  // デバッグするためのDevToolsを表示
+  //win.webContents.openDevTools();
+  // ウィンドウを閉じたら参照を破棄
+  win.on('closed', () => {
+    win = null;
+  });
+}
+// アプリの準備が整ったらウィンドウを表示
+app.on('ready', () => {
+  createWindow();
 });
-
-// Electronの初期化完了時に実行する
-app.on('ready', function() {
-    // ウィンドウ幅、高さ
-    mainWindow = new BrowserWindow({window: 800, height: 600});
-
-    // カレントディレクトリにある index.html を表示する
-    mainWindow.loadURL('file://' + __dirname + '/app/index.html');
-
-    // ウィンドウを閉じたらアプリも終了
-    mainWindow.on('closed', function() {
-        mainWindow = null;
-    });
+// 全てのウィンドウを閉じたらアプリを終了
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
-
+app.on('activate', () => {
+  if (win === null) {
+    createWindow();
+  }
+});
