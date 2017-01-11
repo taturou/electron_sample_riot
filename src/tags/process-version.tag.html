@@ -1,0 +1,45 @@
+import riot from 'riot';
+
+<process-version>
+  <p>We are using...</p>
+
+  <table>
+    <tr>
+      <th>product name</th>
+      <th>version</th>
+    </tr>
+    <tr>
+      <td>node</td>
+      <td>{ node }</td>
+    </tr>
+    <tr>
+      <td>chrome</td>
+      <td>{ chrome }</td>
+    </tr>
+    <tr>
+      <td>electron</td>
+      <td>{ electron }</td>
+    </tr>
+  </table>
+
+  <script>
+    let tag = this;
+
+    tag.node = window.process.versions.node;
+    tag.chrome = window.process.versions.chrome;
+    tag.electron = window.process.versions.electron;
+  </script>
+
+  <style type='scss'>
+    $align: center;
+
+    table th {
+      background-color: lightgray;
+      text-align: $align;
+    }
+    table td {
+      border-bottom: 1px black solid;
+      text-align: $align;
+    }
+  </style>
+</process-version>

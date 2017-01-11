@@ -1,5 +1,19 @@
 import riot from 'riot';
 
 <app>
-  <hoge></hoge>
+  <h1>{ content }</h1>
+  <process-version></process-version>
+
+  <script>
+    let tag = this;
+    const str = 'Riot.js';
+    tag.content = `Electron + ${str}`;
+  </script>
+
+  <style type='scss'>
+    $color: blue;
+    h1 {
+      color: $color;
+    }
+  </style>
 </app>
