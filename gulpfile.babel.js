@@ -146,14 +146,35 @@ gulp.task('serve', function () {
 /*
  * electron パッケージ化 (macOS)
  */
-gulp.task('package:darwin', ['build'], (done) => {
-  packager({
+gulp.task('package:mac', ['build'], (done) => {
+  electronPackager({
     dir: './',                // アプリのディレクトリ
-    out: 'release/darwin',    // .app や .exeの出力先ディレクトリ
+    out: 'release/mac',       // .app や .exeの出力先ディレクトリ
     name: 'ElectronApp',      // アプリケーション名
     arch: 'x64',              // CPU種別. x64 or ia32
     platform: 'darwin',       // OS種別. darwin or win32 or linux
-    version: '1.4.14'         // Electron のバージョン
+    version: '1.4.14',        // Electron のバージョン
+    overwite: true,
+    asar: true
+  }, function (err, path) {
+    // 追加でパッケージに手を加えたければ, path配下を適宜いじる
+    done();
+  });
+});
+
+/*
+ * electron パッケージ化 (Windows)
+ */
+gulp.task('package:win', ['build'], (done) => {
+  electronPackager({
+    dir: './',                // アプリのディレクトリ
+    out: 'release/win',       // .app や .exeの出力先ディレクトリ
+    name: 'ElectronApp',      // アプリケーション名
+    arch: 'all',              // CPU種別. x64 or ia32
+    platform: 'win32',        // OS種別. darwin or win32 or linux
+    version: '1.4.14',        // Electron のバージョン
+    overwite: true,
+    asar: true
   }, function (err, path) {
     // 追加でパッケージに手を加えたければ, path配下を適宜いじる
     done();

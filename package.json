@@ -9,7 +9,8 @@
     "clean": "gulp clean",
     "start": "electron .",
     "serve": "gulp serve",
-    "package": "gulp package:darwin",
+    "package:mac": "gulp package:mac",
+    "package:win": "gulp package:win",
     "test": ""
   },
   "keywords": [
