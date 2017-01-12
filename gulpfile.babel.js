@@ -8,6 +8,7 @@ import buffer from 'vinyl-buffer';
 import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
+import watchify from 'watchify';
 import del from 'del';
 import runSequence from 'run-sequence';
 import electronConnect from 'electron-connect';
@@ -15,6 +16,12 @@ import electronPackager from 'electron-packager';
 
 let electron = electronConnect.server.create();
 
+/*************************************************
+ * local tasks
+ ************************************************/
+/*
+ * riot のタグファイルを javascript に変換
+ */
 gulp.task('riot', () => {
   gulp.src(['src/**/*.tag.html'])
   .pipe(riot({
@@ -39,31 +46,72 @@ gulp.task('riot', () => {
   .pipe(gulp.dest('tmp/'));
 });
 
+/*
+ * javascript を browserify (build用)
+ */
 gulp.task('javascript', () => {
-  browserify({
-    entries: ['src/index.js'],
-    debug: true
-  })
-  .transform(babelify, { presets: ['es2015'] })
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(buffer())
-  .pipe(sourcemaps.init({loadMaps: true}))
-    // Add transformation tasks to the pipeline here.
-    .pipe(uglify())
-    .on('error', gutil.log)
-  .pipe(sourcemaps.write('./'))
-  .pipe(gulp.dest('dist/'));
+  jscompile(false);
 });
 
+/*
+ * javascript を browserify (watch用)
+ */
+gulp.task('watch.javascript', () => {
+  jscompile(true);
+});
+
+function jscompile(is_watch) {
+  let bundler = browserify({
+    entries: ['src/index.js'],
+    debug: true
+  });
+
+  if (is_watch) {
+    bundler = watchify(bundler);
+  }
+
+  function rebundle() {
+    return bundler
+      .transform(babelify, { presets: ['es2015'] })
+      .bundle()
+      .pipe(source('bundle.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true}))
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+        .on('error', gutil.log)
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('dist/'));
+  }
+
+  bundler.on('update', () => {
+    rebundle();
+  })
+  bundler.on('log', gutil.log);
+
+  return rebundle();
+}
+
+/*
+ * 一時ファイルを削除
+ */
 gulp.task('clean.tmp', (cb) => {
   del(['tmp/'], cb);
 });
 
+/*
+ * bundle.js を削除
+ */
 gulp.task('clean.dist', (cb) => {
   del(['dist/'], cb);
 });
 
+/*************************************************
+ * global tasks
+ ************************************************/
+/*
+ * bundle.js を作成
+ */
 gulp.task('build', (cb) => {
   return runSequence(
     'riot',
@@ -72,12 +120,21 @@ gulp.task('build', (cb) => {
   );
 });
 
-gulp.task('watch', () => {
-  gulp.watch(['./src/**/*.js', './src/**/*.tag.html'], ['build']);
+/*
+ * コードが修正されたら自動的に bundle.js を作成
+ */
+gulp.task('watch', ['watch.javascript'], () => {
+  gulp.watch(['./src/**/*.tag.html'], ['riot']);
 })
 
+/*
+ * 一時ファイル、bundle.js を削除
+ */
 gulp.task('clean', ['clean.tmp', 'clean.dist']);
 
+/*
+ * electron を起動
+ */
 gulp.task('serve', function () {
   electron.start();
   // BrowserProcess(MainProcess)が読み込むリソースが変更されたら, Electron自体を再起動
@@ -86,6 +143,9 @@ gulp.task('serve', function () {
   gulp.watch(['dist/bundle.js'], electron.reload);
 });
 
+/*
+ * electron パッケージ化 (macOS)
+ */
 gulp.task('package:darwin', ['build'], (done) => {
   packager({
     dir: './',                // アプリのディレクトリ
