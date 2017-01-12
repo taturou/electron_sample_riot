@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import riot from 'gulp-riot';
+import plumber from 'gulp-plumber';
 import sass from 'node-sass';
 import header from 'gulp-header';
 import browserify from 'browserify';
@@ -25,6 +26,7 @@ let electron = electronConnect.server.create();
  */
 gulp.task('riot', () => {
   gulp.src(['src/**/*.tag.html'])
+  .pipe(plumber())
   .pipe(riot({
     type: 'es6',
     parsers: {
@@ -76,6 +78,7 @@ function jscompile(is_watch) {
     return bundler
       .transform(babelify, { presets: ['es2015'] })
       .bundle()
+      .pipe(plumber())
       .pipe(source('bundle.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
