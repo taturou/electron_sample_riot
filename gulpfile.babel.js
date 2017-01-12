@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import riot from 'gulp-riot';
 import sass from 'node-sass';
+import header from 'gulp-header';
 import browserify from 'browserify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
@@ -43,6 +44,7 @@ gulp.task('riot', () => {
       },
     },
   }))
+  .pipe(header("import riot from 'riot';\n"))
   .pipe(gulp.dest('tmp/'));
 });
 
