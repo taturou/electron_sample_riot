@@ -4,6 +4,10 @@ import sass from 'node-sass';
 import browserify from 'browserify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
+import uglify from 'gulp-uglify';
+import sourcemaps from 'gulp-sourcemaps';
+import gutil from 'gulp-util';
 import del from 'del';
 import runSequence from 'run-sequence';
 import electronConnect from 'electron-connect';
@@ -32,10 +36,10 @@ gulp.task('riot', () => {
       },
     },
   }))
-  .pipe(gulp.dest('temp/'));
+  .pipe(gulp.dest('tmp/'));
 });
 
-gulp.task('es6', () => {
+gulp.task('javascript', () => {
   browserify({
     entries: ['src/index.js'],
     debug: true
@@ -43,21 +47,27 @@ gulp.task('es6', () => {
   .transform(babelify, { presets: ['es2015'] })
   .bundle()
   .pipe(source('bundle.js'))
+  .pipe(buffer())
+  .pipe(sourcemaps.init({loadMaps: true}))
+    // Add transformation tasks to the pipeline here.
+    .pipe(uglify())
+    .on('error', gutil.log)
+  .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('clean-temp', (cb) => {
-  del(['temp/'], cb);
+gulp.task('clean.tmp', (cb) => {
+  del(['tmp/'], cb);
 });
 
-gulp.task('clean-dist', (cb) => {
+gulp.task('clean.dist', (cb) => {
   del(['dist/'], cb);
 });
 
 gulp.task('build', (cb) => {
   return runSequence(
     'riot',
-    'es6',
+    'javascript',
     cb
   );
 });
@@ -66,26 +76,26 @@ gulp.task('watch', () => {
   gulp.watch(['./src/**/*.js', './src/**/*.tag.html'], ['build']);
 })
 
-gulp.task('clean', ['clean-temp', 'clean-dist']);
+gulp.task('clean', ['clean.tmp', 'clean.dist']);
 
 gulp.task('serve', function () {
   electron.start();
-  // BrowserProcess(MainProcess)‚ª“Ç‚İ‚ŞƒŠƒ\[ƒX‚ª•ÏX‚³‚ê‚½‚ç, Electron©‘Ì‚ğÄ‹N“®
+  // BrowserProcess(MainProcess)ãŒèª­ã¿è¾¼ã‚€ãƒªã‚½ãƒ¼ã‚¹ãŒå¤‰æ›´ã•ã‚ŒãŸã‚‰, Electronè‡ªä½“ã‚’å†èµ·å‹•
   gulp.watch(['.main.js', '.serve/browser/**/*.js'], electron.restart);
-  // RendererProcess ‚ª“Ç‚İ‚ŞƒŠƒ\[ƒX‚ª•ÏX‚³‚ê‚½‚ç, RendererProcess ‚É reload ‚³‚¹‚é
+  // RendererProcess ãŒèª­ã¿è¾¼ã‚€ãƒªã‚½ãƒ¼ã‚¹ãŒå¤‰æ›´ã•ã‚ŒãŸã‚‰, RendererProcess ã« reload ã•ã›ã‚‹
   gulp.watch(['dist/bundle.js'], electron.reload);
 });
 
 gulp.task('package:darwin', ['build'], (done) => {
   packager({
-    dir: './',                // ƒAƒvƒŠ‚ÌƒfƒBƒŒƒNƒgƒŠ
-    out: 'release/darwin',    // .app ‚â .exe‚Ìo—ÍæƒfƒBƒŒƒNƒgƒŠ
-    name: 'ElectronApp',      // ƒAƒvƒŠƒP[ƒVƒ‡ƒ“–¼
-    arch: 'x64',              // CPUí•Ê. x64 or ia32
-    platform: 'darwin',       // OSí•Ê. darwin or win32 or linux
-    version: '1.4.14'         // Electron ‚Ìƒo[ƒWƒ‡ƒ“
+    dir: './',                // ã‚¢ãƒ—ãƒªã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+    out: 'release/darwin',    // .app ã‚„ .exeã®å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+    name: 'ElectronApp',      // ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å
+    arch: 'x64',              // CPUç¨®åˆ¥. x64 or ia32
+    platform: 'darwin',       // OSç¨®åˆ¥. darwin or win32 or linux
+    version: '1.4.14'         // Electron ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³
   }, function (err, path) {
-    // ’Ç‰Á‚ÅƒpƒbƒP[ƒW‚Éè‚ğ‰Á‚¦‚½‚¯‚ê‚Î, path”z‰º‚ğ“K‹X‚¢‚¶‚é
+    // è¿½åŠ ã§ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã«æ‰‹ã‚’åŠ ãˆãŸã‘ã‚Œã°, pathé…ä¸‹ã‚’é©å®œã„ã˜ã‚‹
     done();
   });
 });
