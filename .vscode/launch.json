@@ -9,14 +9,14 @@
       "name": "Main process",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/main.js",
+      "program": "${workspaceRoot}/dist/main/js/main.js",
       "cwd": "${workspaceRoot}",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
       "runtimeArgs": [
         "--enable-logging"
       ],
       "args": [
-        "."
+        "dist/"
       ],
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"

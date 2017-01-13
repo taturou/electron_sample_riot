@@ -16,10 +16,34 @@ import runSequence from 'run-sequence';
 import electronConnect from 'electron-connect';
 import electronPackager from 'electron-packager';
 
-let electron = electronConnect.server.create();
+let electron = electronConnect.server.create({
+  path: `${process.cwd()}/dist/`
+});
 
 /*************************************************
- * local tasks
+ * local tasks for package
+ ************************************************/
+/*
+ * package.json を成果物フォルダにコピー
+ */
+gulp.task('package', () => {
+  gulp.src(['src/package.json'])
+  .pipe(gulp.dest('dist/'));
+});
+
+/*************************************************
+ * local tasks for main
+ ************************************************/
+/*
+ * js を成果物フォルダにコピー
+ */
+gulp.task('main.js', () => {
+  gulp.src(['src/main/**/*.js'])
+  .pipe(gulp.dest('dist/main/'));
+});
+
+/*************************************************
+ * local tasks for render
  ************************************************/
 /*
  * html を成果物フォルダにコピー
@@ -135,6 +159,8 @@ gulp.task('clean.dist', (cb) => {
  */
 gulp.task('build', (cb) => {
   return runSequence(
+    'package',
+    'main.js',
     'render.html',
     'render.riot',
     'render.js',
@@ -147,6 +173,8 @@ gulp.task('build', (cb) => {
  * コードが修正されたら自動的に bundle.js を作成
  */
 gulp.task('watch', ['render.bundle.watch'], () => {
+  gulp.watch(['./src/package.json'], ['package']);
+  gulp.watch(['./src/main/**/*.js'], ['main.js']);
   gulp.watch(['./src/render/**/*.html'], ['render.html']);
   gulp.watch(['./src/render/**/*.tag.html'], ['render.riot']);
   gulp.watch(['./src/render/**/*.js'], ['render.js']);
@@ -163,7 +191,7 @@ gulp.task('clean', ['clean.tmp', 'clean.dist']);
 gulp.task('serve', function () {
   electron.start();
   // BrowserProcess(MainProcess)が読み込むリソースが変更されたら, Electron自体を再起動
-  gulp.watch(['main.js'], electron.restart);
+  gulp.watch(['dist/main/**/*.js'], electron.restart);
   // RendererProcess が読み込むリソースが変更されたら, RendererProcess に reload させる
   gulp.watch(['dist/render/**/*.html', 'dist/render/**/*.js'], electron.reload);
 });
@@ -173,7 +201,7 @@ gulp.task('serve', function () {
  */
 gulp.task('package.mac', ['build'], (done) => {
   electronPackager({
-    dir: './',                // アプリのディレクトリ
+    dir: 'dist/',             // アプリのディレクトリ
     out: 'release/mac',       // .app や .exeの出力先ディレクトリ
     name: 'ElectronApp',      // アプリケーション名
     arch: 'x64',              // CPU種別. x64 or ia32
@@ -192,7 +220,7 @@ gulp.task('package.mac', ['build'], (done) => {
  */
 gulp.task('package.win', ['build'], (done) => {
   electronPackager({
-    dir: './',                // アプリのディレクトリ
+    dir: 'dist/',             // アプリのディレクトリ
     out: 'release/win',       // .app や .exeの出力先ディレクトリ
     name: 'ElectronApp',      // アプリケーション名
     arch: 'all',              // CPU種別. x64 or ia32
