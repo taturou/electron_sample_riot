@@ -183,6 +183,11 @@ gulp.task('watch', ['render.bundle.watch'], () => {
 })
 
 /*
+ * 開発時
+ */
+gulp.task('debug', ['watch', 'serve']);
+
+/*
  * 一時ファイル、bundle.js を削除
  */
 gulp.task('clean', ['clean.tmp', 'clean.dist']);

@@ -9,6 +9,7 @@
     "clean": "gulp clean",
     "start": "electron .",
     "serve": "gulp serve",
+    "debug": "gulp debug",
     "package.mac": "gulp package.mac",
     "package.win": "gulp package.win",
     "test": ""
