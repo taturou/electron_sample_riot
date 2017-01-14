@@ -118,7 +118,7 @@ gulp.task('render.bundle.watch', () => {
 
 function jsbundler(obj) {
   let bundler = browserify({
-    entries: obj.entries,
+    entries: entries,
     debug: true
   });
 

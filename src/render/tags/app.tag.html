@@ -1,20 +1,57 @@
 <app>
-  <h1>{ content }</h1>
-  <hr>
-  <process-version></process-version>
-  <hr>
-  <businessman></businessman>
+  <div class="window">
+    <header class="toolbar toolbar-header">
+      <h1 class="title">Riot.js + electron sample</h1>
+    </header>
+    <div class="window-content">
+      <div class="pane-group">
+        <div class="pane-sm sidebar">
+          <nav class="nav-group">
+            <h5 class="nav-group-title">Samples</h5>
+            <a class="nav-group-item {active: active==='versions'}" onclick={ change_page } data-name="versions">
+              <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
+              Versions
+            </a>
+            <a class="nav-group-item {active: active==='businessman'}" onclick={ change_page } data-name="businessman">
+              <i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>
+              Businessman
+            </a>
+          </nav>
+        </div>
+        <div class="pane">
+          <div id="main"></div>
+        </div>
+      </div>
+    </div>
+    <footer class="toolbar toolbar-footer">
+      <h1 class="title">Footer</h1>
+    </footer>
+  </div>
 
   <script>
+    import riot from 'riot';
+
     let tag = this;
-    const str = 'Riot.js';
-    tag.content = `Electron + ${str}`;
+    tag.active = 'versions';
+    tag.change_page = change_page;
+
+    function change_page(e) {
+      page(e.currentTarget.getAttribute('data-name'));
+    }
+
+    function page(page_name) {
+      tag.active = page_name;
+      riot.mount('div#main', page_name, {});
+    }
+
+    tag.on('mount', () => {
+      page('versions');
+    })
   </script>
 
   <style type='scss'>
-    $color: blue;
-    h1 {
-      color: $color;
+    div#main {
+      padding: 10px;
     }
   </style>
 </app>

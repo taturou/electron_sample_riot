@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "taturou@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "photonkit": "^0.1.2"
+  }
 }
