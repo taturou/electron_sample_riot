@@ -1,0 +1,31 @@
+<businessman>
+  <input type="button" value="up" onclick={up}></input>
+  <input type="button" value="down" onclick={down}></input>
+  <p>value: { value }</p>
+
+  <script>
+    import {dispatch, subscribe} from 'businessman';
+
+    let tag = this;
+    tag.value = 0;
+    tag.up = up;
+    tag.down = down;
+
+    function up(event) {
+      dispatch('counter', 'increment', 1);
+      event.preventDefault();
+    }
+
+    function down(event) {
+      dispatch('counter', 'decrement', 1);
+      event.preventDefault();
+    }
+
+    tag.on('mount', () => {
+      subscribe('counter', (state, mutationType) => {
+        tag.value = state;
+        tag.update();
+      });
+    });
+  </script>
+</businessman>

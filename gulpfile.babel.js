@@ -96,23 +96,33 @@ gulp.task('render.js', () => {
  * bundle (build用)
  */
 gulp.task('render.bundle', () => {
-  jsbundler(false);
+  jsbundler({
+    is_watch: false,
+    entries: 'tmp/render/js/main.js',
+    path: 'dist/render/js/',
+    jsname: 'bundle.js'
+  });
 });
 
 /*
  * bundle (watch用)
  */
 gulp.task('render.bundle.watch', () => {
-  jsbundler(true);
+  jsbundler({
+    is_watch: true,
+    entries: 'tmp/render/js/main.js',
+    path: 'dist/render/js/',
+    jsname: 'bundle.js'
+  });
 });
 
-function jsbundler(is_watch) {
+function jsbundler(obj) {
   let bundler = browserify({
-    entries: ['tmp/render/js/main.js'],
+    entries: obj.entries,
     debug: true
   });
 
-  if (is_watch) {
+  if (obj.is_watch) {
     bundler = watchify(bundler);
   }
 
@@ -121,14 +131,14 @@ function jsbundler(is_watch) {
       .transform(babelify, { presets: ['es2015'] })
       .bundle()
       .pipe(plumber())
-      .pipe(source('bundle.js'))
+      .pipe(source(obj.jsname))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
         // Add transformation tasks to the pipeline here.
         .pipe(uglify())
         .on('error', gutil.log)
       .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('dist/render/js/'));
+      .pipe(gulp.dest(obj.path));
   }
 
   bundler.on('update', () => {
@@ -139,6 +149,36 @@ function jsbundler(is_watch) {
   return rebundle();
 }
 
+/*************************************************
+ * local tasks for businessman
+ ************************************************/
+/*
+ * bundle (build用)
+ */
+gulp.task('render.businessman.bundle', () => {
+  jsbundler({
+    is_watch: false,
+    entries: 'tmp/render/js/businessman/worker.js',
+    path: 'dist/render/js/businessman/',
+    jsname: 'worker.js'
+  });
+});
+
+/*
+ * bundle (watch用)
+ */
+gulp.task('render.businessman.bundle.watch', () => {
+  jsbundler({
+    is_watch: true,
+    entries: 'tmp/render/js/businessman/worker.js',
+    path: 'dist/render/js/businessman/',
+    jsname: 'worker.js'
+  });
+});
+
+/*************************************************
+ * local tasks for clean
+ ************************************************/
 /*
  * release を削除
  */
@@ -174,6 +214,7 @@ gulp.task('build', (cb) => {
     'render.riot',
     'render.js',
     'render.bundle',
+    'render.businessman.bundle',
     cb
   );
 });
@@ -181,7 +222,7 @@ gulp.task('build', (cb) => {
 /*
  * コードが修正されたら自動的に bundle.js を作成
  */
-gulp.task('watch', ['render.bundle.watch'], () => {
+gulp.task('watch', ['render.bundle.watch', 'render.businessman.bundle.watch'], () => {
   gulp.watch(['./src/package.json'], ['package']);
   gulp.watch(['./src/main/**/*.js'], ['main.js']);
   gulp.watch(['./src/render/**/*.html'], ['render.html']);
