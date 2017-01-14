@@ -214,8 +214,9 @@ gulp.task('package.mac', ['build'], (done) => {
     arch: 'x64',              // CPU種別. x64 or ia32
     platform: 'darwin',       // OS種別. darwin or win32 or linux
     version: '1.4.14',        // Electron のバージョン
-    overwite: true,
-    asar: true
+    overwite: true,           // 上書き
+    asar: true,               // アーカイブ
+    ignore: '.map'            // sourcemapsは除去
   }, function (err, path) {
     // 追加でパッケージに手を加えたければ, path配下を適宜いじる
     done();
@@ -233,8 +234,9 @@ gulp.task('package.win', ['build'], (done) => {
     arch: 'all',              // CPU種別. x64 or ia32
     platform: 'win32',        // OS種別. darwin or win32 or linux
     version: '1.4.14',        // Electron のバージョン
-    overwite: true,
-    asar: true
+    overwite: true,           // 上書き
+    asar: true,               // アーカイブ
+    ignore: '.map'            // sourcemapsは除去
   }, function (err, path) {
     // 追加でパッケージに手を加えたければ, path配下を適宜いじる
     done();
