@@ -8,6 +8,7 @@ import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import uglify from 'gulp-uglify';
+import minify_html from 'gulp-minify-html';
 import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 import watchify from 'watchify';
@@ -50,6 +51,7 @@ gulp.task('main.js', () => {
  */
 gulp.task('render.html', () => {
   gulp.src(['src/render/**/*.html', '!src/render/**/*.tag.html'])
+  .pipe(minify_html({ empty: true }))
   .pipe(gulp.dest('dist/render/'));
 });
 
