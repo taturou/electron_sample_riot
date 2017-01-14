@@ -140,6 +140,13 @@ function jsbundler(is_watch) {
 }
 
 /*
+ * release を削除
+ */
+gulp.task('clean.release', (cb) => {
+  del(['release/'], cb);
+});
+
+/*
  * 一時ファイルを削除
  */
 gulp.task('clean.tmp', (cb) => {
@@ -190,7 +197,7 @@ gulp.task('debug', ['watch', 'serve']);
 /*
  * 一時ファイル、bundle.js を削除
  */
-gulp.task('clean', ['clean.tmp', 'clean.dist']);
+gulp.task('clean', ['clean.tmp', 'clean.dist', 'clean.release']);
 
 /*
  * electron を起動
