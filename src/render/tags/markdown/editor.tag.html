@@ -15,12 +15,15 @@
       tag.editor.getSession().on('change', (e) => {
         dispatch('markdown', 'set', tag.editor.getValue());
       });
+      dispatch('markdown', 'set', tag.editor.getValue());
     });
   </script>
 
   <style type="scss">
     .editor {
       height: 90vh;
+      min-height: 90vh;
+      max-height: 90vh;
     }
   </style>
 </markdown-editor>

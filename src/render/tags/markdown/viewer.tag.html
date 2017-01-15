@@ -1,15 +1,16 @@
 <markdown-viewer>
-  <p>{ text }</p>
+  <div class="contents" ref="contents"></div>
 
   <script>
     import {subscribe, unsubscribe} from 'businessman';
+    import MarkdownIt from 'markdown-it';
 
     let tag = this;
-    tag.text = '';
+    tag.md = new MarkdownIt();
 
     tag.on('mount', () => {
       subscribe('markdown', (state, mutationType) => {
-        tag.text = state;
+        tag.refs.contents.innerHTML = tag.md.render(state);
         tag.update();
       });
     });
@@ -18,4 +19,12 @@
       unsubscribe('markdown');
     });
   </script>
+
+  <style type="scss">
+    .contents {
+      height: 90vh;
+      min-height: 90vh;
+      max-height: 90vh;
+    }
+  </style>
 </markdown-viewer>
