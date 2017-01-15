@@ -25,6 +25,7 @@
   "author": "taturou@gmail.com",
   "license": "MIT",
   "devDependencies": {
+    "ace-min-noconflict": "^1.1.9",
     "babel": "^6.5.2",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-es2015-riot": "^1.1.0",

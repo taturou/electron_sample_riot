@@ -1,0 +1,21 @@
+<markdown-viewer>
+  <p>{ text }</p>
+
+  <script>
+    import {subscribe, unsubscribe} from 'businessman';
+
+    let tag = this;
+    tag.text = '';
+
+    tag.on('mount', () => {
+      subscribe('markdown', (state, mutationType) => {
+        tag.text = state;
+        tag.update();
+      });
+    });
+
+    tag.on('unmount', () => {
+      unsubscribe('markdown');
+    });
+  </script>
+</markdown-viewer>

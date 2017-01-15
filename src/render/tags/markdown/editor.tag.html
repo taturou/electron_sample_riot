@@ -1,0 +1,26 @@
+<markdown-editor>
+  <div class="editor" id="editor"># Markdown</div>
+
+  <script>
+    import 'ace-min-noconflict';
+    import 'ace-min-noconflict/mode-markdown';
+    import {dispatch} from 'businessman';
+
+    let tag = this;
+    tag.editor = null;
+
+    tag.on('mount', () => {
+      tag.editor = ace.edit("editor");
+      tag.editor.getSession().setMode('ace/mode/markdown');
+      tag.editor.getSession().on('change', (e) => {
+        dispatch('markdown', 'set', tag.editor.getValue());
+      });
+    });
+  </script>
+
+  <style type="scss">
+    .editor {
+      height: 90vh;
+    }
+  </style>
+</markdown-editor>
