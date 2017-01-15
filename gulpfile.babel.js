@@ -223,11 +223,11 @@ gulp.task('build', (cb) => {
  * コードが修正されたら自動的に bundle.js を作成
  */
 gulp.task('watch', ['render.bundle.watch', 'render.businessman.bundle.watch'], () => {
-  gulp.watch(['./src/package.json'], ['package']);
-  gulp.watch(['./src/main/**/*.js'], ['main.js']);
-  gulp.watch(['./src/render/**/*.html'], ['render.html']);
-  gulp.watch(['./src/render/**/*.tag.html'], ['render.riot']);
-  gulp.watch(['./src/render/**/*.js'], ['render.js']);
+  gulp.watch(['src/package.json'], ['package']);
+  gulp.watch(['src/main/**/*.js'], ['main.js']);
+  gulp.watch(['src/render/**/*.html', '!src/render/**/*.tag.html'], ['render.html']);
+  gulp.watch(['src/render/**/*.tag.html'], ['render.riot']);
+  gulp.watch(['src/render/**/*.js'], ['render.js']);
 })
 
 /*
