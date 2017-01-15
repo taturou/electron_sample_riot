@@ -4,7 +4,7 @@
   <p>value: { value }</p>
 
   <script>
-    import {dispatch, subscribe} from 'businessman';
+    import {dispatch, subscribe, unsubscribe} from 'businessman';
 
     let tag = this;
     tag.value = 0;
@@ -27,5 +27,9 @@
         tag.update();
       });
     });
+
+    tag.on('unmount', () => {
+      unsubscribe('counter');
+    })
   </script>
 </businessman>
