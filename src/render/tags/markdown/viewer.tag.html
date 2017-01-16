@@ -6,6 +6,7 @@
     import markdownIt from 'markdown-it';
     import markdownItGithubToc from 'markdown-it-github-toc';
     import markdownItHighlightJs from 'markdown-it-highlightjs';
+    import markdownItEmoji from 'markdown-it-emoji';
 
     let tag = this;
     tag.md = new markdownIt({
@@ -16,7 +17,8 @@
     .use(markdownItGithubToc, {
       anchorLink: false
     })
-    .use(markdownItHighlightJs, {});
+    .use(markdownItHighlightJs, {})
+    .use(markdownItEmoji, {});
 
     tag.on('mount', () => {
       subscribe('markdown', (state, mutationType) => {
