@@ -12,6 +12,8 @@
     tag.on('mount', () => {
       tag.editor = ace.edit("editor");
       tag.editor.getSession().setMode('ace/mode/markdown');
+      tag.editor.$blockScrolling = Infinity;
+
       tag.editor.getSession().on('change', (e) => {
         dispatch('markdown', 'set', tag.editor.getValue());
       });
