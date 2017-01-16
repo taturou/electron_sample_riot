@@ -5,6 +5,7 @@
     import {subscribe, unsubscribe} from 'businessman';
     import markdownIt from 'markdown-it';
     import markdownItGithubToc from 'markdown-it-github-toc';
+    import markdownItHighlightJs from 'markdown-it-highlightjs';
 
     let tag = this;
     tag.md = new markdownIt({
@@ -14,7 +15,8 @@
     })
     .use(markdownItGithubToc, {
       anchorLink: false
-    });
+    })
+    .use(markdownItHighlightJs, {});
 
     tag.on('mount', () => {
       subscribe('markdown', (state, mutationType) => {
@@ -27,6 +29,8 @@
       unsubscribe('markdown');
     });
   </script>
+
+  <link rel="stylesheet" href="../node_modules/highlight.js/styles/solarized-dark.css">
 
   <style type="scss">
     .contents {
