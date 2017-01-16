@@ -3,10 +3,18 @@
 
   <script>
     import {subscribe, unsubscribe} from 'businessman';
-    import MarkdownIt from 'markdown-it';
+    import markdownIt from 'markdown-it';
+    import markdownItGithubToc from 'markdown-it-github-toc';
 
     let tag = this;
-    tag.md = new MarkdownIt();
+    tag.md = new markdownIt({
+      html: true,
+      linkify: true,
+      typography: true,
+    })
+    .use(markdownItGithubToc, {
+      anchorLink: false
+    });
 
     tag.on('mount', () => {
       subscribe('markdown', (state, mutationType) => {

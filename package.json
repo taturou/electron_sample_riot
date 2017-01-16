@@ -46,6 +46,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.8",
     "markdown-it": "^8.2.2",
+    "markdown-it-github-toc": "^3.1.0",
     "node-sass": "^4.2.0",
     "regexp": "^1.0.0",
     "riot": "^3.0.7",
