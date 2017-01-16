@@ -9,7 +9,6 @@
   "author": "taturou@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "ace-min-noconflict": "^1.1.9",
     "font-awesome": "^4.7.0",
     "photonkit": "^0.1.2"
   }
