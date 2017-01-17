@@ -7,6 +7,7 @@
     import markdownItGithubToc from 'markdown-it-github-toc';
     import markdownItHighlightJs from 'markdown-it-highlightjs';
     import markdownItEmoji from 'markdown-it-emoji';
+    import markdownItFontawesome from 'markdown-it-fontawesome';
     import twemoji from 'twemoji';
 
     let tag = this;
@@ -19,7 +20,8 @@
       anchorLink: false
     })
     .use(markdownItHighlightJs, {})
-    .use(markdownItEmoji, {});
+    .use(markdownItEmoji, {})
+    .use(markdownItFontawesome, {});
 
     tag.md.renderer.rules.emoji = function(token, idx) {
       let html = twemoji.parse(
