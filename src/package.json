@@ -11,6 +11,7 @@
   "dependencies": {
     "font-awesome": "^4.7.0",
     "highlight.js": "^9.9.0",
-    "photonkit": "^0.1.2"
+    "photonkit": "^0.1.2",
+    "twemoji": "^2.2.0"
   }
 }

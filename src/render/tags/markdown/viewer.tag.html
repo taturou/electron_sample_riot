@@ -7,6 +7,7 @@
     import markdownItGithubToc from 'markdown-it-github-toc';
     import markdownItHighlightJs from 'markdown-it-highlightjs';
     import markdownItEmoji from 'markdown-it-emoji';
+    import twemoji from 'twemoji';
 
     let tag = this;
     tag.md = new markdownIt({
@@ -19,6 +20,18 @@
     })
     .use(markdownItHighlightJs, {})
     .use(markdownItEmoji, {});
+
+    tag.md.renderer.rules.emoji = function(token, idx) {
+      let html = twemoji.parse(
+        token[idx].content,
+        {
+          callback: function(icon, options, variant) {
+            return `../node_modules/twemoji/2/svg/${icon}.svg`;
+          }
+        }
+      );
+      return html;
+    }
 
     tag.on('mount', () => {
       subscribe('markdown', (state, mutationType) => {
@@ -39,6 +52,9 @@
       height: 90vh;
       min-height: 90vh;
       max-height: 90vh;
+    }
+    .emoji {
+      height: 1em;
     }
   </style>
 </markdown-viewer>
