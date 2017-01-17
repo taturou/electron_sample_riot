@@ -14,5 +14,8 @@
     "highlight.js": "^9.9.0",
     "photonkit": "^0.1.2",
     "twemoji": "^2.2.0"
+  },
+  "devDependencies": {
+    "github-markdown-css": "^2.4.1"
   }
 }
