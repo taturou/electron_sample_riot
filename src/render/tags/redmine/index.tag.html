@@ -1,0 +1,65 @@
+<redmine>
+  <input type="text" value="10" ref="limit" />
+  <input type="button" value="get" onclick="{get}" />
+  <input type="button" value="clear" onclick="{clear}" />
+  <div id="table"></div>
+
+  <script>
+    import Handsontable from 'handsontable';
+    import {dispatch, subscribe, unsubscribe} from 'businessman';
+
+    let tag = this;
+    tag.hot = null;
+    tag.get = get;
+    tag.clear = clear;
+
+    function get() {
+      dispatch('redmine', 'get', {limit: tag.refs.limit.value});
+    }
+
+    function clear() {
+      dispatch('redmine', 'clear');
+    }
+
+    tag.on('mount', () => {
+      let container = document.getElementById('table');
+      tag.hot = new Handsontable(container, {
+        data: [],
+        dataSchema: {
+          id: null,
+          tracker: {name: null},
+          status: {name: null},
+          subject: null,
+          project: {name: null},
+          assigned_to: {name: null}
+        },
+        colHeaders: ['#', 'Tracker', 'Status', 'Subject', 'Project', 'Assigned'],
+        columns: [
+          {data: 'id'},
+          {data: 'tracker.name'},
+          {data: 'status.name'},
+          {data: 'subject'},
+          {data: 'project.name'},
+          {data: 'assigned_to.name'}
+        ],
+        readOnly: true,
+        columnSorting: true,
+        sortIndicator: true,
+      });
+
+      subscribe('redmine', (state, mutationType) => {
+        tag.hot.updateSettings({
+          data: state.issues
+        });
+        //tag.hot.loadData(state.issues);
+      });
+    });
+
+    tag.on('unmount', () => {
+      unsubscribe('redmine');
+    });
+  </script>
+
+  <style type="scss">
+  </style>
+</redmine>

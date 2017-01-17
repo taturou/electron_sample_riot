@@ -46,4 +46,55 @@ worker.registerStore({
   }
 });
 
+import Redmine from 'node-redmine';
+const hostname = 'http://thq-server:8001';
+const config = {
+  apiKey: '69e0197754c43cda16d90de771dc036034f6574c',
+  format: 'json'
+};
+
+worker.registerStore({
+  type: 'redmine',
+  state: {issues: []},
+  mutations: {
+    get: (state, issues) => {
+      state.issues = issues;
+      return state;
+    },
+    clear: (state) => {
+      state.issues = [];
+      return state;
+    }
+  },
+  actions: {
+    get: (commit, options) => {
+      let redmine = new Redmine(hostname, config);
+
+      redmine.issues(
+        {
+          assigned_to_id: 'me',
+          limit: options.limit
+        },
+        (err, data) => {
+          if (err) throw err;
+
+          let issues =[];
+          data.issues.forEach((issue, index, array) => {
+            issues.push(issue);
+          })
+          commit('get', issues);
+        }
+      );
+    },
+    clear: (commit) => {
+      commit('clear');
+    }
+  },
+  getters: {
+    issues: (state) => {
+      return state.issues;
+    }
+  }
+});
+
 worker.start();
