@@ -10,4 +10,4 @@ import '../tags/redmine/index.tag.js';
 riot.mount('app');
 
 import { install } from 'businessman'
-install('js/businessman/worker.js' )
+install('../js/businessman/worker.js' )

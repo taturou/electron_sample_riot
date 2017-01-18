@@ -17,7 +17,7 @@ function createWindow() {
     height: 600
   });
   // index.htmlを表示
-  win.loadURL(`file://${__dirname}/../../render/index.html`);
+  win.loadURL(`file://${__dirname}/../../render/html/index.html`);
   // デバッグするためのDevToolsを表示
   //win.webContents.openDevTools();
   // ウィンドウを閉じたら参照を破棄
