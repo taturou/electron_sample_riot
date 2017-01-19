@@ -4,6 +4,7 @@
   "description": "",
   "main": "main/js/main.js",
   "scripts": {
+    "gulp": "gulp",
     "help": "gulp --tasks-simple",
     "debug": "gulp debug",
     "build": "gulp build",
