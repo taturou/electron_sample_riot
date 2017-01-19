@@ -13,7 +13,7 @@
     "serve": "gulp serve",
     "start": "electron ./dist",
     "package-mac": "gulp package-mac",
-    "package-win": "gulp package-win",
+    "package-win": "gulp package-win-x64",
     "test": ""
   },
   "keywords": [
