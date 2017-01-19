@@ -14,7 +14,11 @@ function createWindow() {
   // BrowserWindowインスタンスを生成
   win = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    frame: false,
+    'standard-window': false,
+    titleBarStyle: 'hidden-inset',
+    resizable: true
   });
   // index.htmlを表示
   win.loadURL(`file://${__dirname}/../../render/html/index.html`);

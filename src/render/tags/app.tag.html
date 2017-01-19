@@ -61,5 +61,13 @@
     div#main {
       padding: 10px;
     }
+    .toolbar-header {
+      -webkit-app-region: drag; /* ドラッグでwindowの移動可能にする */
+      -webkit-user-select: none; /* 選択不可 */
+    }
+    .window-content {
+      -webkit-app-region: no-drag; /* ドラッグでwindowの移動不可にする */
+      -webkit-user-select: none; /* 選択不可 */
+    }
   </style>
 </app>
