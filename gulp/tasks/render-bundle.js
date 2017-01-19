@@ -6,11 +6,18 @@ import config from '../config';
 gulp.task('render-bundle', (callback) => {
   return runSequence(
     ['render-html', 'render-js', 'render-riot'],
-    ['render-bundle-bundle', 'render-businessman-bundle'],
+    'render-bundle-do',
     callback);
 });
 
-gulp.task('render-bundle-bundle', () => {
+gulp.task('render-businessman-bundle', (callback) => {
+  return runSequence(
+    'render-js',
+    'render-businessman-do',
+    callback);
+});
+
+gulp.task('render-bundle-do', () => {
   return bundle({
     is_watch: false,
     entries: config.render.js.bundle.entries,
@@ -19,7 +26,7 @@ gulp.task('render-bundle-bundle', () => {
   });
 });
 
-gulp.task('render-businessman-bundle', () => {
+gulp.task('render-businessman-bundle-do', () => {
   return bundle({
     is_watch: false,
     entries: config.render.businessman.bundle.entries,
