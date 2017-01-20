@@ -13,7 +13,7 @@ gulp.task('render-bundle', (callback) => {
 gulp.task('render-businessman-bundle', (callback) => {
   return runSequence(
     'render-js',
-    'render-businessman-do',
+    'render-businessman-bundle-do',
     callback);
 });
 
