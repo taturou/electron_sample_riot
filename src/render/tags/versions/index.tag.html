@@ -1,24 +1,26 @@
 <versions>
-  <p>We are using...</p>
+  <div class="contents">
+    <p>We are using...</p>
 
-  <table>
-    <tr>
-      <th>product name</th>
-      <th>version</th>
-    </tr>
-    <tr>
-      <td>node</td>
-      <td>{ node }</td>
-    </tr>
-    <tr>
-      <td>chrome</td>
-      <td>{ chrome }</td>
-    </tr>
-    <tr>
-      <td>electron</td>
-      <td>{ electron }</td>
-    </tr>
-  </table>
+    <table>
+      <tr>
+        <th>product name</th>
+        <th>version</th>
+      </tr>
+      <tr>
+        <td>node</td>
+        <td>{ node }</td>
+      </tr>
+      <tr>
+        <td>chrome</td>
+        <td>{ chrome }</td>
+      </tr>
+      <tr>
+        <td>electron</td>
+        <td>{ electron }</td>
+      </tr>
+    </table>
+  </div>
 
   <script>
     let tag = this;
@@ -28,9 +30,13 @@
     tag.electron = window.process.versions.electron;
   </script>
 
-  <style type='scss'>
+  <style type="scss">
     $align: center;
 
+    .contents {
+      flex: 1;
+      padding: 10px;
+    }
     table th {
       background-color: lightgray;
       text-align: $align;

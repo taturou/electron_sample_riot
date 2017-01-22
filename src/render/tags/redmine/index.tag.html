@@ -1,8 +1,10 @@
 <redmine>
-  <input type="text" value="10" ref="limit" />
-  <input type="button" value="get" onclick="{get}" />
-  <input type="button" value="clear" onclick="{clear}" />
-  <div id="table"></div>
+  <div class="contentes">
+    <input type="text" value="10" ref="limit" />
+    <input type="button" value="get" onclick="{get}" />
+    <input type="button" value="clear" onclick="{clear}" />
+    <div id="table"></div>
+  </div>
 
   <script>
     import Handsontable from 'handsontable';
@@ -61,5 +63,9 @@
   </script>
 
   <style type="scss">
+    .contents {
+      flex: 1;
+      padding: 10px;
+    }
   </style>
 </redmine>

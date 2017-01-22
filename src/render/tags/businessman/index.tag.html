@@ -1,7 +1,9 @@
 <businessman>
-  <input type="button" value="up" onclick={up}></input>
-  <input type="button" value="down" onclick={down}></input>
-  <p>value: { value }</p>
+  <div class="contents">
+    <input type="button" value="up" onclick="{up}"></input>
+    <input type="button" value="down" onclick="{down}"></input>
+    <p>value: { value }</p>
+  </div>
 
   <script>
     import {dispatch, subscribe, unsubscribe} from 'businessman';
@@ -32,4 +34,11 @@
       unsubscribe('counter');
     })
   </script>
+
+  <style type="scss">
+    .contents {
+      flex: 1;
+      padding: 10px;
+    }
+  </style>
 </businessman>

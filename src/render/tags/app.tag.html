@@ -8,26 +8,25 @@
         <div class="pane-sm sidebar">
           <nav class="nav-group">
             <h5 class="nav-group-title">Samples</h5>
-            <a class="nav-group-item {active: active==='versions'}" onclick={ change_page } data-name="versions">
-              <fa fa=cog fw />
+            <a class="nav-group-item {active: active==='versions'}" onclick="{ change_page }" data-name="versions">
+              <fa fa="cog" fw />
               Versions
             </a>
-            <a class="nav-group-item {active: active==='businessman'}" onclick={ change_page } data-name="businessman">
-              <fa fa=briefcase fw />
+            <a class="nav-group-item {active: active==='businessman'}" onclick="{ change_page }" data-name="businessman">
+              <fa fa="briefcase" fw />
               Businessman
             </a>
-            <a class="nav-group-item {active: active==='markdown'}" onclick={ change_page } data-name="markdown">
-              <fa fa=pencil fw />
+            <a class="nav-group-item {active: active==='markdown'}" onclick="{ change_page }" data-name="markdown">
+              <fa fa="pencil" fw />
               Markdown
             </a>
-            <a class="nav-group-item {active: active==='redmine'}" onclick={ change_page } data-name="redmine">
-              <fa fa=table fw />
+            <a class="nav-group-item {active: active==='redmine'}" onclick="{ change_page }" data-name="redmine">
+              <fa fa="table" fw />
               Redmine
             </a>
           </nav>
         </div>
-        <div class="pane">
-          <div id="main"></div>
+        <div class="pane" id="main">
         </div>
       </div>
     </div>
@@ -57,9 +56,9 @@
     })
   </script>
 
-  <style type='scss'>
+  <style type="scss">
     div#main {
-      padding: 10px;
+      display: flex;
     }
   </style>
 </app>

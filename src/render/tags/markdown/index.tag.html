@@ -1,21 +1,21 @@
 <markdown>
-  <div class="box">
-    <div class="editor" data-is="markdown-editor"></div>
-    <div class="viewer" data-is="markdown-viewer"></div>
-  </div>
+  <div class="editor" data-is="markdown-editor"></div>
+  <div class="viewer" data-is="markdown-viewer"></div>
 
   <style type="scss">
-    .box {
-      display: flex;
-      align-items: stretch;
-    }
     .editor, .viewer {
-      flex: 1;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      align-content: stretch;
       flex-grow: 1;
+      display: flex;
     }
     .viewer {
       padding-left: 1em;
       border-left: 1px gray solid;
+      overflow-y: scroll;
     }
   </style>
 </markdown>
