@@ -1,26 +1,57 @@
 <redmine>
   <div class="contentes">
-    <input type="text" value="10" ref="limit" />
-    <input type="button" value="get" onclick="{get}" />
-    <input type="button" value="clear" onclick="{clear}" />
+    <div class="functions">
+      <input class="input" type="text" value="10" ref="limit" />
+      <span class="button" onclick="{get}"><span id='download-btn'></span></span>
+      <span class="button" onclick="{clear}"><fa fa="trash-o" /></span>
+    </div>
     <div id="table"></div>
   </div>
 
   <script>
+    import riot from 'riot';
     import Handsontable from 'handsontable';
     import {dispatch, subscribe, unsubscribe} from 'businessman';
+
+    const download_button = {
+      element: 'span#download-btn',
+      icons: {
+        normal: 'cloud-download',
+        spin: 'spinner'
+      }
+    };
 
     let tag = this;
     tag.hot = null;
     tag.get = get;
     tag.clear = clear;
+    tag.toggle_icons = toggle_icons;
 
     function get() {
+      tag.toggle_icons(download_button, true);
       dispatch('redmine', 'get', {limit: tag.refs.limit.value});
     }
 
     function clear() {
       dispatch('redmine', 'clear');
+    }
+
+    function toggle_icons(obj, is_spin) {
+      let option = {};
+      if (is_spin) {
+        option = {
+          fa: obj.icons.spin,
+          fw: true,
+          spin: true
+        };
+      } else {
+        option = {
+          fa: obj.icons.normal,
+          fw: true,
+        };
+      }
+
+      riot.mount(obj.element, 'fa', option);
     }
 
     tag.on('mount', () => {
@@ -49,10 +80,13 @@
         sortIndicator: true,
       });
 
+      tag.toggle_icons(download_button, false);
+
       subscribe('redmine', (state, mutationType) => {
         tag.hot.updateSettings({
           data: state.issues
         });
+        tag.toggle_icons(download_button, false);
         //tag.hot.loadData(state.issues);
       });
     });
@@ -64,8 +98,21 @@
 
   <style type="scss">
     .contents {
-      flex: 1;
       padding: 10px;
+      flex: 1;
+      flex-direction: column;
+    }
+    .functions {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    .input {
+    }
+    .button {
+      border: 1px solid black;
+      padding: 1px 6px;
+      background: #f5f5f4;
     }
   </style>
 </redmine>
