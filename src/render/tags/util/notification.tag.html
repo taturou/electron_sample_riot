@@ -1,0 +1,47 @@
+<notification>
+  <div if="{ display }" class="notification">
+    { text }
+  </div>
+
+  <script>
+    import {dispatch, subscribe, unsubscribe} from 'businessman';
+
+    let tag = this;
+
+    tag.display = false;
+    tag.text = '';
+
+    tag.on('mount', () => {
+      subscribe('notification', (state, mutationType) => {
+        tag.text = state;
+        tag.display = true;
+        tag.update();
+
+        setTimeout(() => {
+          tag.display = false;
+          tag.update();
+        }, 3000);
+      });
+    });
+
+    tag.on('unmount', () => {
+      unsubscribe('notification');
+    });
+  </script>
+
+  <style type="scss">
+    .notification {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      min-width: 300px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      background: #ff3860;
+      text-align: center;
+      z-index: 100;
+    }
+  </style>
+</notification>

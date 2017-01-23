@@ -64,25 +64,29 @@ worker.registerStore({
     clear: (state) => {
       state.issues = [];
       return state;
+    },
+    nothing: (state) => {
+      return state;
     }
   },
   actions: {
     get: (commit, options) => {
       let redmine = new Redmine(hostname, config);
-
       redmine.issues(
         {
           assigned_to_id: 'me',
           limit: options.limit
         },
         (err, data) => {
-          if (err) throw err;
-
-          let issues =[];
-          data.issues.forEach((issue, index, array) => {
-            issues.push(issue);
-          })
-          commit('get', issues);
+          if (err) {
+            commit('nothing');
+          } else {
+            let issues =[];
+            data.issues.forEach((issue, index, array) => {
+              issues.push(issue);
+            })
+            commit('get', issues);
+          }
         }
       );
     },
@@ -96,5 +100,26 @@ worker.registerStore({
     }
   }
 });
+
+worker.registerStore({
+  type: 'notification',
+  state: '',
+  mutations: {
+    push: (state, text) => {
+      return text;
+    }
+  },
+  actions: {
+    push: (commit, text) => {
+      commit('push', text);
+    }
+  },
+  getters: {
+    get: (state) => {
+      return state;
+    }
+  }
+});
+
 
 worker.start();

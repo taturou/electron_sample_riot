@@ -1,4 +1,5 @@
 <redmine>
+  <notification></notification>
   <div class="contentes">
     <div class="functions">
       <input class="input" type="text" value="10" ref="limit" />
@@ -83,11 +84,14 @@
       tag.toggle_icons(download_button, false);
 
       subscribe('redmine', (state, mutationType) => {
-        tag.hot.updateSettings({
-          data: state.issues
-        });
+        if (mutationType === 'nothing') {
+          dispatch('notification', 'push', 'Redmine access error');
+        } else {
+          tag.hot.updateSettings({
+            data: state.issues
+          });
+        }
         tag.toggle_icons(download_button, false);
-        //tag.hot.loadData(state.issues);
       });
     });
 
