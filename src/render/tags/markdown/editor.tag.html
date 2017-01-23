@@ -22,6 +22,12 @@
       tag.editor.setKeyboardHandler("ace/keyboard/emacs");
       tag.editor.$blockScrolling = Infinity;
 
+      tag.editor.commands.addCommand({
+        name: "backspaceH",
+        bindKey: {win: "Ctrl-H", mac: "Ctrl-H"},
+        exec: (editor) => { editor.remove("left"); },
+      });
+
       tag.editor.getSession().on('change', (e) => {
         dispatch('markdown', 'set', tag.editor.getValue());
       });
