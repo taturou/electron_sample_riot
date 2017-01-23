@@ -51,7 +51,7 @@ module.exports = {
   // release
   release: {
     appDir: `${common.distDir}`,
-    electronVersion: '1.4.14',
+    electronVersion: '1.4.15',
     releaseDir: `${common.releaseDir}`
   }
 };
