@@ -1,6 +1,18 @@
 <markdown>
-  <div class="editor" data-is="markdown-editor"></div>
-  <div class="viewer" data-is="markdown-viewer"></div>
+  <div class="editor" id="editor" data-is="markdown-editor"></div>
+  <div class="viewer" id="viewer" data-is="markdown-viewer"></div>
+
+  <script>
+    import split from 'split.js';
+
+    let tag = this;
+
+    tag.on('mount', () => {
+      split(['#editor', '#viewer'], {
+        sizes: ['50%', '50%']
+      });
+    });
+  </script>
 
   <style type="scss">
     .editor, .viewer {
@@ -14,8 +26,21 @@
     }
     .viewer {
       padding-left: 1em;
-      border-left: 1px gray solid;
+      /* border-left: 1px gray solid; */
       overflow-y: scroll;
+    }
+    .gutter {
+      background-color: #f5f5f4;
+      background-repeat: no-repeat;
+      background-position: 50%;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+    }
+    .gutter.gutter-vertical {
+      background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=')
+    }
+    .gutter.gutter-horizontal {
+      background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')
     }
   </style>
 </markdown>
