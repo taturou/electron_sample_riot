@@ -55,22 +55,34 @@ const config = {
 
 worker.registerStore({
   type: 'redmine',
-  state: {issues: []},
+  state: {
+    issues: [],
+    users: [],
+    projects: []
+  },
   mutations: {
-    get: (state, issues) => {
+    issues: (state, issues) => {
       state.issues = issues;
+      return state;
+    },
+    users: (state, users) => {
+      state.users = users;
+      return state;
+    },
+    projects: (state, projects) => {
+      state.projects = projects;
       return state;
     },
     clear: (state) => {
       state.issues = [];
       return state;
     },
-    nothing: (state) => {
+    error: (state) => {
       return state;
     }
   },
   actions: {
-    get: (commit, options) => {
+    issues: (commit, options) => {
       let redmine = new Redmine(hostname, config);
       redmine.issues(
         {
@@ -78,15 +90,46 @@ worker.registerStore({
           limit: options.limit
         },
         (err, data) => {
-          if (err) {
-            commit('nothing');
-          } else {
-            let issues =[];
-            data.issues.forEach((issue, index, array) => {
-              issues.push(issue);
-            })
-            commit('get', issues);
-          }
+          if (err) commit('error', err);
+
+          let items = [];
+          data.issues.forEach((item, index, array) => {
+            items.push(item);
+          })
+          commit('issues', items);
+        }
+      );
+    },
+    users: (commit) => {
+      let redmine = new Redmine(hostname, config);
+      redmine.users(
+        {
+          status: 1
+        },
+        (err, data) => {
+          if (err) commit('error', err);
+
+          let items = [];
+          data.users.forEach((item, index, array) => {
+            items.push(item);
+          })
+          commit('users', items);
+        }
+      );
+    },
+    projects: (commit) => {
+      let redmine = new Redmine(hostname, config);
+      redmine.projects(
+        {
+        },
+        (err, data) => {
+          if (err) commit('error', err);
+
+          let items = [];
+          data.projects.forEach((item, index, array) => {
+            items.push(item);
+          })
+          commit('projects', items);
         }
       );
     },

@@ -3,7 +3,9 @@
   <div class="contentes">
     <div class="functions">
       <input class="input" type="text" value="10" ref="limit" />
-      <span class="button" onclick="{get}"><span id="download-btn"></span></span>
+      <span class="button" onclick="{issues}"><span id="download-btn"> issues</span></span>
+      <span class="button" onclick="{users}"><span id="download-btn"> users</span></span>
+      <span class="button" onclick="{projects}"><span id="download-btn"> projects</span></span>
       <span class="button" onclick="{clear}"><fa fa="trash-o" /></span>
     </div>
     <div id="table"></div>
@@ -24,13 +26,25 @@
 
     let tag = this;
     tag.hot = null;
-    tag.get = get;
+    tag.issues = issues;
+    tag.users = users;
+    tag.projects = projects;
     tag.clear = clear;
     tag.toggle_icons = toggle_icons;
 
-    function get() {
+    function issues() {
       tag.toggle_icons(download_button, true);
-      dispatch('redmine', 'get', {limit: tag.refs.limit.value});
+      dispatch('redmine', 'issues', {limit: tag.refs.limit.value});
+    }
+
+    function users() {
+      tag.toggle_icons(download_button, true);
+      dispatch('redmine', 'users', {limit: tag.refs.limit.value});
+    }
+
+    function projects() {
+      tag.toggle_icons(download_button, true);
+      dispatch('redmine', 'projects', {limit: tag.refs.limit.value});
     }
 
     function clear() {
@@ -84,7 +98,8 @@
       tag.toggle_icons(download_button, false);
 
       subscribe('redmine', (state, mutationType) => {
-        if (mutationType === 'nothing') {
+        console.log(JSON.stringify(state));
+        if (mutationType === 'error') {
           dispatch('notification', 'push', 'Redmine access error');
         } else {
           tag.hot.updateSettings({
