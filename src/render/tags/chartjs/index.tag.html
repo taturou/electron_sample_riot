@@ -1,0 +1,59 @@
+<chart-pie>
+  <p>pie-chart</p>
+</chart-pie>
+
+<chart-line>
+  <p>line-chart</p>
+</chart-line>
+
+<chart-area>
+  <p>area-chart</p>
+</chart-area>
+
+<chart-bar>
+  <p>bar-char</p>
+</chart-bar>
+
+<chartjs>
+  <div class="box">
+    <div class="nav">
+      <div class="btn" onclick="{change_chart}" data-name="chart-pie"><fa fa="pie-chart" fw /> pie</div>
+      <div class="btn" onclick="{change_chart}" data-name="chart-line"><fa fa="line-chart" fw /> line</div>
+      <div class="btn" onclick="{change_chart}" data-name="chart-area"><fa fa="area-chart" fw /> area</div>
+      <div class="btn" onclick="{change_chart}" data-name="chart-bar"><fa fa="bar-chart" fw /> bar</div>
+    </div>
+    <div class="chart" id="chart">
+      What chart?
+    </div>
+  </div>
+
+  <script>
+    import riot from 'riot';
+
+    let tag = this;
+    tag.change_chart = change_chart;
+
+    function change_chart(e) {
+      const tag_name = e.currentTarget.getAttribute('data-name');
+      riot.mount('div#chart', tag_name, {});
+    }
+  </script>
+
+  <style type="scss">
+    .box {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+    .nav {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    .btn {
+      flex-grow: 1;
+      padding: 2px 4px;
+      border: 1px solid gray;
+    }
+  </style>
+</chartjs>

@@ -8,6 +8,7 @@ import '../tags/markdown/index.tag.js';
 import '../tags/markdown/editor.tag.js';
 import '../tags/markdown/viewer.tag.js';
 import '../tags/redmine/index.tag.js';
+import '../tags/chartjs/index.tag.js';
 riot.mount('app');
 
 import { install } from 'businessman'
