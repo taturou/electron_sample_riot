@@ -9,6 +9,9 @@ import '../tags/markdown/editor.tag.js';
 import '../tags/markdown/viewer.tag.js';
 import '../tags/redmine/index.tag.js';
 import '../tags/chartjs/index.tag.js';
+import '../tags/chartjs/chart_bar.tag.js';
+import '../tags/chartjs/chart_line.tag.js';
+import '../tags/chartjs/chart_pie.tag.js';
 riot.mount('app');
 
 import { install } from 'businessman'

@@ -1,8 +1,14 @@
 <businessman>
-  <div class="contents">
-    <input type="button" value="up" onclick="{up}"></input>
-    <input type="button" value="down" onclick="{down}"></input>
-    <p>value: { value }</p>
+  <div class="window">
+    <div class="pane">
+      <div class="box">
+        <button class="btn btn-default" onclick="{up}">Up</button>
+        <button class="btn btn-default" onclick="{down}">Down</button>
+      </div>
+      <div class="box">
+        <p>value: { value }</p>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -36,8 +42,8 @@
   </script>
 
   <style type="scss">
-    .contents {
-      flex: 1;
+    .box {
+      border: 10px;
       padding: 10px;
     }
   </style>
