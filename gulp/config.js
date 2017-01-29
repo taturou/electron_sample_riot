@@ -41,7 +41,7 @@ module.exports = {
     },
     businessman: {
       bundle: {
-        entries: `${common.tmpDir}/render/js/businessman/worker.js`,
+        entries: `${common.tmpDir}/render/js/businessman/index.js`,
         distDir: `${common.distDir}/render/js/businessman`,
         distFile: 'worker.js'
       }
