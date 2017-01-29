@@ -8,6 +8,8 @@ import '../tags/markdown/index.tag.js';
 import '../tags/markdown/editor.tag.js';
 import '../tags/markdown/viewer.tag.js';
 import '../tags/redmine/index.tag.js';
+import '../tags/redmine/products.tag.js';
+import '../tags/redmine/issues.tag.js';
 import '../tags/chartjs/index.tag.js';
 import '../tags/chartjs/chart_bar.tag.js';
 import '../tags/chartjs/chart_line.tag.js';

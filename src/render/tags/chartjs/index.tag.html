@@ -3,8 +3,8 @@
     <div class="tab-group">
       <virtual each="{ chart, i in charts }">
         <div class="tab-item { active: chart.active }" onclick="{ change_chart }">
-          {chart.name} chart
           <fa fa="{ chart.icon }" fw />
+          {chart.name} chart
         </div>
       </virtual>
     </div>
@@ -45,7 +45,12 @@
       }
       e.item.chart.active = true;
       riot.mount('div#chart', e.item.chart.tag, {});
+      tag.update();
     }
+
+    tag.on('mount', () => {
+      change_chart({item: {chart: tag.charts[0]}});
+    });
   </script>
 
   <style type="scss">
