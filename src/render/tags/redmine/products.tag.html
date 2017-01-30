@@ -1,3 +1,148 @@
-<redmine-products>
-  <p>products</p>
-</redmine-products>
+<redmine-projects>
+  <notification></notification>
+  <div class="form-group">
+    <label>Redmine host name</label>
+    <input type="text" class="form-control" placeholder="hostname" ref="hostname" value="http://172.16.90.64:8001">
+  </div>
+  <div class="form-group">
+    <label>Redmine API key</label>
+    <input type="text" class="form-control" placeholder="apiKey" ref="apiKey" value="69e0197754c43cda16d90de771dc036034f6574c">
+  </div>
+  <div class="form-group">
+    <label>Number of requirement projects</label>
+    <input type="text" class="form-control" placeholder="number of projects" ref="limit" value="10">
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-form btn-primary" onclick="{ projects }">
+      <span id="download-btn"></span>
+    </button>
+    <button type="submit" class="btn btn-form btn-default" onclick="{ clear }">
+      <fa fa="trash-o" fw />
+    </button>
+  </div>
+  <hr>
+  <div id="table"></div>
+
+  <script>
+    import riot from 'riot';
+    import Handsontable from 'handsontable';
+    import {dispatch, subscribe, unsubscribe} from 'businessman';
+
+    const download_button = {
+      element: 'span#download-btn',
+      icons: {
+        normal: 'cloud-download',
+        spin: 'spinner'
+      }
+    };
+
+    let tag = this;
+    tag.hot = null;
+    tag.projects = projects;
+    tag.clear = clear;
+    tag.toggle_icons = toggle_icons;
+
+    function projects(event) {
+      tag.toggle_icons(download_button, true);
+      dispatch(
+        'redmine',
+        'projects',
+        {
+          hostname: tag.refs.hostname.value,
+          apiKey: tag.refs.apiKey.value,
+          limit: tag.refs.limit.value
+        }
+      );
+      event.preventDefault();
+    }
+
+    function clear(event) {
+      dispatch('redmine', 'clear');
+      event.preventDefault();
+    }
+
+    function toggle_icons(obj, is_spin) {
+      let option = {};
+      if (is_spin) {
+        option = {
+          fa: obj.icons.spin,
+          fw: true,
+          spin: true
+        };
+      } else {
+        option = {
+          fa: obj.icons.normal,
+          fw: true,
+        };
+      }
+
+      riot.mount(obj.element, 'fa', option);
+    }
+
+    tag.on('mount', () => {
+      let container = document.getElementById('table');
+      tag.hot = new Handsontable(container, {
+        data: [],
+        dataSchema: {
+          'id': null,
+          'プロジェクト番号': null,
+          'プロジェクト名': null,
+          'リーダ名': null,
+          'メンバ数': null,
+          'PJ開始日': null,
+          'PJ終了日': null,
+          '見積もり工数(md)': null
+        },
+        colHeaders: ['#', 'プロジェクト番号', 'プロジェクト名', 'リーダ名', 'メンバ数', 'PJ開始日', 'PJ終了日', '見積もり工数(md)'],
+        columns: [
+          {data: 'id'},
+          {data: 'プロジェクト番号'},
+          {data: 'プロジェクト名'},
+          {data: 'リーダ名'},
+          {data: 'メンバ数'},
+          {data: 'PJ開始日'},
+          {data: 'PJ終了日'},
+          {data: '見積もり工数(md)'}
+        ],
+        readOnly: true,
+        columnSorting: true,
+        sortIndicator: true,
+      });
+
+      tag.toggle_icons(download_button, false);
+
+      subscribe('redmine', (state, mutationType) => {
+        if (mutationType === 'error') {
+          dispatch('notification', 'push', 'Redmine access error');
+        } else {
+          tag.hot.updateSettings({
+            data: state.projects
+          });
+        }
+        tag.toggle_icons(download_button, false);
+      });
+    });
+
+    tag.on('unmount', () => {
+      unsubscribe('redmine');
+    });
+  </script>
+
+  <style type="scss">
+    .contents {
+      padding: 10px;
+      flex: 1;
+      flex-direction: column;
+    }
+    .functions {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    .button {
+      border: 1px solid black;
+      padding: 1px 6px;
+      background: #f5f5f4;
+    }
+  </style>
+</redmine-projects>

@@ -11,7 +11,6 @@ worker.registerStore({
   type: 'redmine',
   state: {
     issues: [],
-    users: [],
     projects: []
   },
   mutations: {
@@ -19,16 +18,15 @@ worker.registerStore({
       state.issues = issues;
       return state;
     },
-    users: (state, users) => {
-      state.users = users;
-      return state;
-    },
     projects: (state, projects) => {
       state.projects = projects;
       return state;
     },
     clear: (state) => {
-      state.issues = [];
+      state = {
+        issues: [],
+        projects: []
+      };
       return state;
     },
     error: (state) => {
@@ -37,7 +35,7 @@ worker.registerStore({
   },
   actions: {
     issues: (commit, options) => {
-      let redmine = new Redmine(hostname, config);
+      let redmine = new Redmine(options.hostname, config);
       redmine.issues(
         {
           assigned_to_id: 'me',
@@ -45,45 +43,31 @@ worker.registerStore({
         },
         (err, data) => {
           if (err) commit('error', err);
-
-          let items = [];
-          data.issues.forEach((item, index, array) => {
-            items.push(item);
-          })
-          commit('issues', items);
+          commit('issues', data.issues);
         }
       );
     },
-    users: (commit) => {
-      let redmine = new Redmine(hostname, config);
-      redmine.users(
-        {
-          status: 1
-        },
-        (err, data) => {
-          if (err) commit('error', err);
-
-          let items = [];
-          data.users.forEach((item, index, array) => {
-            items.push(item);
-          })
-          commit('users', items);
-        }
-      );
-    },
-    projects: (commit) => {
-      let redmine = new Redmine(hostname, config);
+    projects: (commit, options) => {
+      let redmine = new Redmine(options.hostname, config);
       redmine.projects(
         {
+          limit: options.limit
         },
         (err, data) => {
           if (err) commit('error', err);
-
-          let items = [];
-          data.projects.forEach((item, index, array) => {
-            items.push(item);
-          })
-          commit('projects', items);
+          let projects = data.projects.map((org) => {
+            let pj = {};
+            for (let key in org) {
+              if (key !== 'custom_fields') {
+                pj[key] = org[key];
+              }
+            }
+            for (let field of org.custom_fields) {
+              pj[field.name] = field.value;
+            }
+            return pj;
+          });
+          commit('projects', projects);
         }
       );
     },

@@ -1,13 +1,27 @@
 <redmine-issues>
   <notification></notification>
-  <div class="contentes">
-    <div class="functions">
-      <input class="input" type="text" value="10" ref="limit" />
-      <span class="button" onclick="{issues}"><span id="download-btn"></span></span>
-      <span class="button" onclick="{clear}"><fa fa="trash-o" fw /></span>
-    </div>
-    <div id="table"></div>
+  <div class="form-group">
+    <label>Redmine host name</label>
+    <input type="text" class="form-control" placeholder="hostname" ref="hostname" value="http://172.16.90.64:8001">
   </div>
+  <div class="form-group">
+    <label>Redmine API key</label>
+    <input type="text" class="form-control" placeholder="apiKey" ref="apiKey" value="69e0197754c43cda16d90de771dc036034f6574c">
+  </div>
+  <div class="form-group">
+    <label>Number of requirement issues</label>
+    <input type="text" class="form-control" placeholder="number of issues" ref="limit" value="10">
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-form btn-primary" onclick="{ issues }">
+      <span id="download-btn"></span>
+    </button>
+    <button type="submit" class="btn btn-form btn-default" onclick="{ clear }">
+      <fa fa="trash-o" fw />
+    </button>
+  </div>
+  <hr>
+  <div id="table"></div>
 
   <script>
     import riot from 'riot';
@@ -28,13 +42,23 @@
     tag.clear = clear;
     tag.toggle_icons = toggle_icons;
 
-    function issues() {
+    function issues(event) {
       tag.toggle_icons(download_button, true);
-      dispatch('redmine', 'issues', {limit: tag.refs.limit.value});
+      dispatch(
+        'redmine',
+        'issues',
+        {
+          hostname: tag.refs.hostname.value,
+          apiKey: tag.refs.apiKey.value,
+          limit: tag.refs.limit.value
+        }
+      );
+      event.preventDefault();
     }
 
-    function clear() {
+    function clear(event) {
       dispatch('redmine', 'clear');
+      event.preventDefault();
     }
 
     function toggle_icons(obj, is_spin) {
@@ -84,7 +108,6 @@
       tag.toggle_icons(download_button, false);
 
       subscribe('redmine', (state, mutationType) => {
-        console.log(JSON.stringify(state));
         if (mutationType === 'error') {
           dispatch('notification', 'push', 'Redmine access error');
         } else {
