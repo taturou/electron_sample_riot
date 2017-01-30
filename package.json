@@ -33,7 +33,7 @@
     "babel-preset-es2015-riot": "^1.1.0",
     "babel-register": "^6.22.0",
     "babelify": "^7.3.0",
-    "browserify": "^13.3.0",
+    "browserify": "^14.0.0",
     "businessman": "^1.4.7",
     "chart.js": "^2.4.0",
     "del": "^2.2.2",
@@ -51,7 +51,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-riot": "^1.0.6",
     "gulp-sourcemaps": "^2.4.0",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^2.0.1",
     "gulp-util": "^3.0.8",
     "handsontable": "^0.30.1",
     "markdown-it": "^8.2.2",
@@ -60,16 +60,16 @@
     "markdown-it-github-toc": "^3.1.0",
     "markdown-it-highlightjs": "^2.0.0",
     "node-redmine": "^0.1.5",
-    "node-sass": "^4.3.0",
+    "node-sass": "^4.4.0",
     "regexp": "^1.0.0",
     "require-dir": "^0.3.1",
-    "riot": "^3.0.7",
+    "riot": "^3.1.0",
     "run-sequence": "^1.2.2",
     "split.js": "^1.2.0",
-    "twemoji": "^2.2.0",
+    "twemoji": "^2.2.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0"
+    "watchify": "^3.9.0"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
@@ -77,6 +77,6 @@
     "handsontable": "^0.30.1",
     "highlight.js": "^9.9.0",
     "photonkit": "^0.1.2",
-    "twemoji": "^2.2.0"
+    "twemoji": "^2.2.3"
   }
 }
