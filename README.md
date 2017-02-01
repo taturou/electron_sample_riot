@@ -7,24 +7,49 @@ Electron + Riot.js (ES2015) のサンプルコードです。
 以下のサンプルを実装しています。
 
 * Versions
-  * node、chrome、electron のバージョンを表示します。
-  * Electron Quick Start と同じです。
 * Businessman
-  * [+] [-] ボタンを押すと値がインクリメント/デクリメントするだけのサンプルです。
-  * 値の管理に、Reduxライクな状態管理ライブラリ [Businessman](https://gitlab.com/aggre/businessman) を使用しています。
 * Markdown
-  * 2ペインのMarkdownエディタのサンプルです。
-  * emacs キーバインドです。
-  * `:hoge:` で、UNICODE絵文字と font-awesome を認識します。
-  * エディタに [ace](https://ace.c9.io) を、Markdownパーサに [markdown-it](https://github.com/markdown-it/markdown-it) を使用しています。
 * Redmine
-  * Redmineからチケットを取得し、一覧するサンプルです。
-  * Redmine REST API の処理に [node-redmine](https://github.com/zanran/node-redmine) を、テーブルに [Handsontable](https://handsontable.com/) を使用しています。
 * Chart.js
-  * Pie chart、Line chart、Bar chart を表示するサンプルです。
-  * グラフの描画に [Chart.js](http://www.chartjs.org/) を使用しています。
 
 また、全体的に、[Photon](http://photonkit.com/) を使用してUIを構築しています。
+
+## Versions
+
+![content_versions](readme/content_versions.png)
+
+* node、chrome、electron のバージョンを表示します。
+* Electron Quick Start と同じです。
+
+## Businessman
+
+![content_businessman](readme/content_businessman.png)
+
+* [+] [-] ボタンを押すと値がインクリメント/デクリメントするだけのサンプルです。
+* 値の管理に、Reduxライクな状態管理ライブラリ [Businessman](https://gitlab.com/aggre/businessman) を使用しています。
+
+## Markdown
+
+![content_markdown](readme/content_markdown.png)
+
+* 2ペインのMarkdownエディタのサンプルです。
+* emacs キーバインドです。
+* `:hoge:` で、UNICODE絵文字と font-awesome を認識します。
+* エディタに [ace](https://ace.c9.io) を、Markdownパーサに [markdown-it](https://github.com/markdown-it/markdown-it) を使用しています。
+
+## Redmine
+
+![content_redmine](readme/content_redmine.png)
+
+* Redmineからチケットを取得し、一覧するサンプルです。
+* Redmine REST API の処理に [node-redmine](https://github.com/zanran/node-redmine) を、テーブルに [Handsontable](https://handsontable.com/) を使用しています。
+
+## Chart.js
+
+![content_chartjs](readme/content_chartjs.png)
+
+* Pie chart、Line chart、Bar chart を表示するサンプルです。
+* グラフの描画に [Chart.js](http://www.chartjs.org/) を使用しています。
 
 # Getting started
 
