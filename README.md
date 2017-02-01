@@ -96,17 +96,26 @@ $ npm run package-mac
 
 ## 概要
 
+`git clone` すると以下のフォルダが存在します。
+
 <pre>
 electron_sample_riot
 ├── LICENSE             - 意味もなくMITライセンスです。
 ├── README.md           - このファイルです。
-├── dist/               - 成果物を格納します。このフィルだだけあればアプリが動きます。
 ├── gulp/               - gulp タスクをタスクごとにファイルに分けて置いてあります。
 ├── gulpfile.babel.js   - gulp。ES6 で書いてます。
-├── node_modules/       - npm モジュール。
 ├── package.json        - package.json
+├── readme/             - このファイル用の画像を格納します。
+└── src/                - ソースです。html も js も全てここに格納しています。
+</pre>
+
+以下のフォルダは動的にに生成されます。
+
+<pre>
+electron_sample_riot
+├── dist/               - src/ をビルドした成果物を格納します。このフィルだけあればアプリが動きます。
+├── node_modules/       - npm モジュール。
 ├── release/            - dist/ をパッケージングしたものを格納します。
-├── src/                - ソースです。html も js も全てここに格納しています。
 └── tmp/                - src/ から dist/ を作るときに出る一時ファイルを格納しています。
 </pre>
 
@@ -160,7 +169,7 @@ src/ から生成したコードは dist/ に格納されます。
 
 基本的に js はバンドルして一ファイルになりますが、font や css などは node_modules/ 以下から動的に読み込みます。
 そのための dist/package.json は package.json から生成します。
-アプリの実行に必要なモジュールは 'dependencies' に定義されているので、'scripts' と 'devDependencies' を除いたものを置いています。
+アプリの実行に必要なモジュールは 'dependencies' に定義されているので、'scripts' と 'devDependencies' を除いたものをコピーします。node_modules/ のインストールには [gulp-install](https://github.com/slushjs/gulp-install) を使用しています。
 
 <pre>
 electron_sample_riot
@@ -183,6 +192,8 @@ electron_sample_riot
 
 # npm run xxx
 
+### build
+
 ```sh
 $ npm run build
 ```
@@ -191,17 +202,23 @@ src/ から dist/ を生成します。
 
 dist/node_modules/ も自動的にインストールします。
 
+### start
+
 ```sh
 $ npm start
 ```
 
 dist/ から Electron を起動します。
 
+### clean
+
 ```sh
 $ npm run clean
 ```
 
 tmp/ と dist/ を削除します。
+
+### package
 
 ```sh
 $ npm run package-mac
@@ -212,11 +229,15 @@ dist/ をパッケージングします。
 
 自動的に `npm run build` を実行します。
 
+### watch
+
 ```sh
 $ npm run watch
 ```
 
 ソースコードの修正を監視し、自動的にビルドします。
+
+### serve
 
 ```sh
 $ npm run serve
@@ -227,17 +248,23 @@ dist/ から Electron を起動します。
 ソースコードの修正を監視し、修正があれば自動的にコードをリロードします。
 メインスレッドとレンダースレッドの両方に対応しています。
 
+### debug
+
 ```sh
 $ npm run debug
 ```
 
 `npm run watch` と `npm run serve` を同時に実行します。
 
+### gulp
+
 ```sh
 $ npm run gulp
 ```
 
 gulp タスクを直接実行します。
+
+### help
 
 ```sh
 $ npm run help
