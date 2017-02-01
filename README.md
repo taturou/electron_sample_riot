@@ -25,7 +25,7 @@ Electron + Riot.js (ES2015) のサンプルコードです。
 
 ![content_businessman](readme/content_businessman.png)
 
-* [+] [-] ボタンを押すと値がインクリメント/デクリメントするだけのサンプルです。
+* [Up] [Down] ボタンを押すと値がインクリメント/デクリメントするだけのサンプルです。
 * 値の管理に、Reduxライクな状態管理ライブラリ [Businessman](https://gitlab.com/aggre/businessman) を使用しています。
 
 ## Markdown
@@ -100,21 +100,25 @@ $ npm run package-mac
 
 <pre>
 electron_sample_riot
+├── .vscode/            - Visual Studio Code 用の設定ファイルを格納しています。
+├── gulp/               - gulp タスクをタスクごとにファイルに分けて格納しています。
+├── readme/             - このファイル用の画像を格納します。
+├── src/                - ソースです。html も js も全てここに格納しています。
+├── .babelrc            - js は ES6 で書いてバベります。
+├── .editorconfig       - EditorConfig 用の設定ファイルです。
+├── .gitignore          - .gitignore です。
 ├── LICENSE             - 意味もなくMITライセンスです。
 ├── README.md           - このファイルです。
-├── gulp/               - gulp タスクをタスクごとにファイルに分けて置いてあります。
 ├── gulpfile.babel.js   - gulp。ES6 で書いてます。
-├── package.json        - package.json
-├── readme/             - このファイル用の画像を格納します。
-└── src/                - ソースです。html も js も全てここに格納しています。
+└── package.json        - package.json
 </pre>
 
-以下のフォルダは動的にに生成されます。
+以下のフォルダは動的に生成されます。
 
 <pre>
 electron_sample_riot
-├── dist/               - src/ をビルドした成果物を格納します。このフィルだけあればアプリが動きます。
-├── node_modules/       - npm モジュール。
+├── dist/               - src/ をビルドした成果物を格納します。このファイルだけあればアプリが動きます。
+├── node_modules/       - npm モジュールです。
 ├── release/            - dist/ をパッケージングしたものを格納します。
 └── tmp/                - src/ から dist/ を作るときに出る一時ファイルを格納しています。
 </pre>
@@ -168,8 +172,11 @@ electron_sample_riot
 src/ から生成したコードは dist/ に格納されます。
 
 基本的に js はバンドルして一ファイルになりますが、font や css などは node_modules/ 以下から動的に読み込みます。
+
 そのための dist/package.json は package.json から生成します。
-アプリの実行に必要なモジュールは 'dependencies' に定義されているので、'scripts' と 'devDependencies' を除いたものをコピーします。node_modules/ のインストールには [gulp-install](https://github.com/slushjs/gulp-install) を使用しています。
+アプリの実行に必要なモジュールは 'dependencies' に定義されているので、'scripts' と 'devDependencies' を除いたものをコピーします。
+
+npm モジュールのインストールは、ビルド時に [gulp-install](https://github.com/slushjs/gulp-install) を用いて行います。
 
 <pre>
 electron_sample_riot
