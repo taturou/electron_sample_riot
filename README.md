@@ -266,10 +266,10 @@ $ npm run debug
 ### gulp
 
 ```sh
-$ npm run gulp
+$ npm run gulp hoge
 ```
 
-gulp タスクを直接実行します。
+gulp タスク 'hoge' を直接実行します。
 
 ### help
 
