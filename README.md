@@ -1,5 +1,5 @@
-![electronn](https://img.shields.io/badge/Electron-1.4.15-9EE9F8.svg)
-![riot](https://img.shields.io/badge/Riot.js-3.1.0-ff0044.svg)
+<img src="https://img.shields.io/badge/Electron-1.4.15-9EE9F8.png">
+<img src="https://img.shields.io/badge/Riot.js-3.1.0-ff0044.png">
 
 # これは何？
 
